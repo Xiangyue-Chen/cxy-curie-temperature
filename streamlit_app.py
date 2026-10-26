@@ -82,13 +82,13 @@ else:
             for item in result.results
         ]
     )
-    st.dataframe(summary_frame, use_container_width=True, hide_index=True)
+    st.dataframe(summary_frame, width="stretch", hide_index=True)
     if result.errors:
         error_frame = pd.DataFrame(result.errors, columns=["文件名", "错误"])
-        st.dataframe(error_frame, use_container_width=True, hide_index=True)
+        st.dataframe(error_frame, width="stretch", hide_index=True)
     st.markdown("### 诊断图")
     selected = st.selectbox("选择样品", options=list(result.figures))
-    st.image(result.figures[selected], use_column_width=True)
+    st.image(result.figures[selected], width="stretch")
     download_csv, download_zip = st.columns(2)
     download_csv.download_button(
         "下载居里温度汇总 CSV",

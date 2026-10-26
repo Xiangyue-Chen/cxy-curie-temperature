@@ -14,12 +14,16 @@ def test_empty_page_prompts_for_upload_without_exception():
     assert "上传数据后" in app.info[0].value
 
 
-def test_demo_runs_pipeline_and_displays_results():
+def test_demo_runs_pipeline_and_displays_results_without_deprecated_width_api(capsys):
     app = AppTest.from_file(str(APP)).run()
     app.button(key="run_demo").click().run(timeout=60)
+    captured = capsys.readouterr()
 
     assert not app.exception
     assert "合成演示" in app.warning[0].value
     assert len(app.dataframe) == 1
     assert app.button(key="clear_results")
+    assert "use_container_width" not in captured.err
+    assert all("use_column_width" not in item.value for item in app.warning)
+
 
